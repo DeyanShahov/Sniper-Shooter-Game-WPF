@@ -62,13 +62,29 @@ namespace Sniper_Shooter_Game_WPF
             showGhostTimer.Interval = TimeSpan.FromMilliseconds(20);
             showGhostTimer.Start();
 
-            topLocation = new List<int> { 270, 540, 23, 540, 270, 23};
+            topLocation = new List<int> { 270, 540, 23, 540, 270, 23 };
             bottomLocation = new List<int> { 139, 670, 420, 670, 139, 420 };
         }
 
         private void GhostAnimation(object? sender, EventArgs e)
         {
-  
+            scoreText.Content = "Score: " + score;
+            missText.Content = "Missed" + miss;
+
+            foreach (var x in MyCanvas.Children.OfType<Rectangle>())
+            {
+                if (x.Tag.ToString() == "ghost")
+                {
+                    Canvas.SetTop(x, Canvas.GetTop(x) - 5);
+
+                    if (Canvas.GetTop(x) < -180) removeThis.Add(x);
+                }
+            }
+
+            foreach (Rectangle x in removeThis)
+            {
+                MyCanvas.Children.Remove(x);
+            }
         }
 
         private void DummyMoveTick(object? sender, EventArgs e)
@@ -106,11 +122,28 @@ namespace Sniper_Shooter_Game_WPF
             if (e.OriginalSource is Rectangle)
             {
                 Rectangle activeRect = (Rectangle)e.OriginalSource;
-                MyCanvas.Children.Remove(activeRect);
-                score++;
+
+                if ((string)activeRect.Tag == "top" || (string)activeRect.Tag == "bottom")
+                {
+                    MyCanvas.Children.Remove(activeRect);
+                    score++;
+
+                    Rectangle ghostRec = new Rectangle
+                    {
+                        Width = 60,
+                        Height = 100,
+                        Fill = ghostSprite,
+                        Tag = "ghost"
+                    };
+
+                    Canvas.SetLeft(ghostRec, Mouse.GetPosition(MyCanvas).X - 40);
+                    Canvas.SetTop(ghostRec, Mouse.GetPosition(MyCanvas).Y - 60);
+
+                    MyCanvas.Children.Add(ghostRec);
+                }
 
                 if ((string)activeRect.Tag == "top") topCount--;
-                if((string)activeRect.Tag == "bottom") bottomCount--;
+                if ((string)activeRect.Tag == "bottom") bottomCount--;
             }
         }
 
