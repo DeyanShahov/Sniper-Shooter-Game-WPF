@@ -83,7 +83,12 @@ namespace Sniper_Shooter_Game_WPF
 
         private void MyCanvas_MouseMove(object sender, MouseEventArgs e)
         {
+            Point position = e.GetPosition(this);
+            double pX = position.X;
+            double pY = position.Y;
 
+            Canvas.SetLeft(scopeImage, pX - scopeImage.Width / 2);
+            Canvas.SetTop(scopeImage, pY - scopeImage.Height / 2);
         }
 
         private void ShowDummies(int x, int y, int skin, string tag)
