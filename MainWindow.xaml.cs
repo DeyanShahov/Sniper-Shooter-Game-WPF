@@ -103,7 +103,15 @@ namespace Sniper_Shooter_Game_WPF
 
         private void MyCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            if (e.OriginalSource is Rectangle)
+            {
+                Rectangle activeRect = (Rectangle)e.OriginalSource;
+                MyCanvas.Children.Remove(activeRect);
+                score++;
 
+                if ((string)activeRect.Tag == "top") topCount--;
+                if((string)activeRect.Tag == "bottom") bottomCount--;
+            }
         }
 
         private void MyCanvas_MouseMove(object sender, MouseEventArgs e)
