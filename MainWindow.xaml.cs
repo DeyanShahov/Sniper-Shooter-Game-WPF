@@ -42,6 +42,38 @@ namespace Sniper_Shooter_Game_WPF
         public MainWindow()
         {
             InitializeComponent();
+
+            MyCanvas.Focus();
+            this.Cursor = Cursors.None;
+
+            backgroundImage.ImageSource = new BitmapImage(new Uri("pack://application:,,,/Images/background.png"));
+            MyCanvas.Background = backgroundImage;
+
+            scopeImage.Source = new BitmapImage(new Uri("pack://application:,,,/Images/sniper-aim.png"));
+            scopeImage.IsHitTestVisible = false;
+
+            ghostSprite.ImageSource = new BitmapImage(new Uri("pack://application:,,,/Images/ghost.png"));
+
+            dummyMoveTimer.Tick += DummyMoveTick;
+            dummyMoveTimer.Interval = TimeSpan.FromMilliseconds(random.Next(800, 2000));
+            dummyMoveTimer.Start();
+
+            showGhostTimer.Tick += GhostAnimation;
+            showGhostTimer.Interval = TimeSpan.FromMilliseconds(20);
+            showGhostTimer.Start();
+
+            topLocation = new List<int> { 270, 540, 23, 540, 270, 23};
+            bottomLocation = new List<int> { 128, 678, 138, 678, 128, 128 };
+        }
+
+        private void GhostAnimation(object? sender, EventArgs e)
+        {
+  
+        }
+
+        private void DummyMoveTick(object? sender, EventArgs e)
+        {
+
         }
 
         private void MyCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
