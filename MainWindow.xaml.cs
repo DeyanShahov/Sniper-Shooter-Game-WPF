@@ -63,7 +63,7 @@ namespace Sniper_Shooter_Game_WPF
             showGhostTimer.Start();
 
             topLocation = new List<int> { 270, 540, 23, 540, 270, 23};
-            bottomLocation = new List<int> { 128, 678, 138, 678, 128, 128 };
+            bottomLocation = new List<int> { 139, 670, 420, 670, 139, 420 };
         }
 
         private void GhostAnimation(object? sender, EventArgs e)
@@ -73,7 +73,32 @@ namespace Sniper_Shooter_Game_WPF
 
         private void DummyMoveTick(object? sender, EventArgs e)
         {
+            removeThis.Clear();
 
+            foreach (var i in MyCanvas.Children.OfType<Rectangle>())
+            {
+                if ((string)i.Tag == "top" || (string)i.Tag == "bottom")
+                {
+                    removeThis.Add(i);
+
+                    topCount--;
+                    bottomCount--;
+
+                    miss++;
+                }
+            }
+
+            if (topCount < 3)
+            {
+                ShowDummies(topLocation[random.Next(0, 6)], 35, random.Next(1, 5), "top");
+                topCount++;
+            }
+
+            if (bottomCount < 3)
+            {
+                ShowDummies(bottomLocation[random.Next(0, 6)], 230, random.Next(1, 5), "bottom");
+                bottomCount++;
+            }
         }
 
         private void MyCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -93,7 +118,36 @@ namespace Sniper_Shooter_Game_WPF
 
         private void ShowDummies(int x, int y, int skin, string tag)
         {
+            ImageBrush dummyBackground = new ImageBrush();
 
+            switch (skin)
+            {
+                case 1:
+                    dummyBackground.ImageSource = new BitmapImage(new Uri("pack://application:,,,/Images/dummy01.png"));
+                    break;
+                case 2:
+                    dummyBackground.ImageSource = new BitmapImage(new Uri("pack://application:,,,/Images/dummy02.png"));
+                    break;
+                case 3:
+                    dummyBackground.ImageSource = new BitmapImage(new Uri("pack://application:,,,/Images/dummy03.png"));
+                    break;
+                case 4:
+                    dummyBackground.ImageSource = new BitmapImage(new Uri("pack://application:,,,/Images/dummy04.png"));
+                    break;
+            }
+
+            Rectangle newRec = new Rectangle
+            {
+                Tag = tag,
+                Width = 80,
+                Height = 135,
+                Fill = dummyBackground
+            };
+
+            Canvas.SetLeft(newRec, x);
+            Canvas.SetTop(newRec, y);
+
+            MyCanvas.Children.Add(newRec);
         }
     }
 }
