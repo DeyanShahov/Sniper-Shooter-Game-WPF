@@ -5,8 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Sniper_Shooter_Game_WPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="Snipe the Dummies" Height="450" Width="800" ResizeMode="CanMinimize">
+    <Canvas x:Name="MyCanvas" Focusable="True" Background="LightBlue" 
+            MouseLeftButtonDown="MyCanvas_MouseLeftButtonDown" MouseMove="MyCanvas_MouseMove">
 
-    </Grid>
+        <Image x:Name="scopeImage" Height="60" Width="60" Panel.ZIndex="999" Canvas.Left="380" Canvas.Top="303" />
+
+        <Label x:Name="scoreText" Content="Score: 0" FontSize="14" FontWeight="ExtraBold" Canvas.Left="660" Canvas.Top="65" />
+        <Label x:Name="missText" Content="Missed: 0" FontSize="14" FontWeight="ExtraBold" Canvas.Left="660" Canvas.Top="20" />
+
+    </Canvas>
 </Window>

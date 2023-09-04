@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace Sniper_Shooter_Game_WPF
 {
@@ -20,9 +21,42 @@ namespace Sniper_Shooter_Game_WPF
     /// </summary>
     public partial class MainWindow : Window
     {
+        ImageBrush backgroundImage = new ImageBrush();
+        ImageBrush ghostSprite = new ImageBrush();
+
+        DispatcherTimer dummyMoveTimer = new DispatcherTimer();
+        DispatcherTimer showGhostTimer = new DispatcherTimer();
+
+        int topCount = 0;
+        int bottomCount = 0;
+
+        int score;
+        int miss;
+
+        List<int> topLocation;
+        List<int> bottomLocation;
+
+        List<Rectangle> removeThis = new List<Rectangle>();
+        Random random = new Random();
+
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void MyCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void MyCanvas_MouseMove(object sender, MouseEventArgs e)
+        {
+
+        }
+
+        private void ShowDummies(int x, int y, int skin, string tag)
+        {
+
         }
     }
 }
